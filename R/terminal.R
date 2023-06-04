@@ -1,6 +1,6 @@
 #' find fsi terminal
 #'
-#'
+#' @export
 find_fsi <- function(){
   out <- NA
   if(length(rstudioapi::terminalList())<1){
@@ -23,6 +23,7 @@ find_fsi <- function(){
   return(out)
 }
 
+
 #' Initializes a simple fsi terminal
 #'
 #' @export
@@ -42,28 +43,25 @@ fsi_init <- function(){
 
 
 
-
-
 #' Evaluate Code in FSI
 #'
+#' @param code Fsharp code to be executed in FSI
+#' @param terminal relevant terminal id
+#' @param show should it bring the terminal window to focus?
 #' @export
-to_fsi <- function(code, terminal=NA){
+to_fsi <- function(code, terminal=NA, show=T){
+  if(is.na(terminal)){
+    terminal <- find_fsi()
+  }
   code %>% stringi::stri_split_lines() -> codechunks
   codechunks_adj <- paste(codechunks[[1]],';;\n',sep = '')
   stringr::str_flatten(codechunks_adj) ->cca
   #rstudioapi::terminalExecute(cca)
+  if(show){rstudioapi::terminalActivate()}
   for(i in codechunks_adj){
     rstudioapi::terminalSend(terminal, i)
   }
 }
 
-code <- 'let x = 1
-let y = 2
-x+y'
-terminal <- NA
 
-pp <- fsi_init()
 
-find_fsi()
-
-to_fsi(code)
