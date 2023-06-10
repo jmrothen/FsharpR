@@ -1,47 +1,88 @@
 #' check if .net sdk is installed
 #'
+#' @param verbose should additional progress detail be printed?
 #'
-find_dotnet <- function(){
+#' @returns a list with two elements
+#' \item{found}{a boolean indicating if the path was found}
+#' \item{path}{the path or paths to the relavent folders}
+#'
+#' @export
+find_dotnet <- function(verbose=T){
   if('dotnet.exe' %in% list.files('C://program files//dotnet//')){
-    sdks <- list.files('C://program files/dotnet/sdk')
-    print(paste('Already installed sdks;', stringr::str_flatten_comma(sdks)))
-    out <- T
+    #sdks <- list.files('C://program files/dotnet/sdk')
+    #print(paste('Found some SDKs', stringr::str_flatten_comma(sdks)))
+
+    if(verbose){
+      print('Found an installation at the default location...')
+      print('C://program files//dotnet//')
+    }
+    found <- T
+    location <- "C://program files/dotnet/"
   }else{
-    # print('i could not find a dotnet folder in the default location')
-    out <- F
+    # print('i could not find a dotnet folder in the default loprintion')
+    list.files(path="C://program files/",
+               recursive = T,
+               include.dirs = T,
+               full.names = T,
+               ignore.case = T,
+               pattern='dotnet') -> folders
+    folders[grepl('dotnet/dotnet.exe$',folders)] -> exes
+    if(length(exes)>=2){
+      if(verbose){
+        print('Found some installations of the dotnet SDK:')
+        print(exes,sep = '\n')
+      }
+      found <- T
+      location <- exes
+    }else{
+      if(is.na(exes)){
+        if(verbose){
+          print('Could not find any installations :(')
+        }
+        found <- F
+        location <- NA
+      }else{
+        if(verbose){
+          print('Found an installation:')
+          print(exes,sep='\n')
+        }
+        found <- T
+        location <- exes
+      }
+    }
   }
+  out <- list(installed=found, path=location)
   return(out)
 }
 
-# idk how to go about this section yet,
-# there are shell/bash scripts to install dotnet, but i'm not certain how to best use them yet
-if(F){
-#' find dotnet sdk link
-rvest::read_html('https://dotnet.microsoft.com/en-us/download/dotnet/7.0') -> html
-html_elements(html,css = '.download-panel button') %>% html_text()
 
-# bash script for linux/macos
-# https://dot.net/v1/dotnet-install.sh
-download.file('https://dot.net/v1/dotnet-install.sh',destfile='~/R-Packages/FsharpR/data-raw/dotnet-install.sh')
-
-# powershell for windows
-# https://dot.net/v1/dotnet-install.ps1
-download.file('https://dot.net/v1/dotnet-install.ps1',destfile='~/R-Packages/FsharpR/data-raw/dotnet-install.ps1')
-
-}
-
-
+#' find sdks
 #'
 #'
 #'
-install_dotnet_sdk <- function(version='ask'){
-  find_dotnet() -> already_installed
-  if(already_installed){
-    print('Looks like you already have it installed')
-  }else{
-
+get_sdks <- function(){
+  dotnet <- find_dotnet()
+  for(i in dotnet$path){
+    print('Dotnet Installation:')
+    sdks <- list.files(paste(i,'sdk',sep=''))
+    print(paste('List of SDKs: ', stringr::str_flatten_comma(sdks)))
   }
 }
+
+
+
+##' install dotnet
+##'
+##'
+#install_dotnet_sdk <- function(version='ask'){
+#  suppressMessages(find_dotnet()) -> dotnet
+#  if(dotnet$installed){
+#    print('Looks like you already have it installed')
+#    print('Cancelling the install!')
+#  }else{
+#
+#  }
+#}
 
 
 
