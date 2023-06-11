@@ -23,10 +23,10 @@ The main functionality of the package are the addins included. These can be conf
 ## Development Plans and Ideas
 
 - function to install the .net SDK with an R function
--   ~install_dotnet(version_number, etc)
--   an alternative option is to just have a function that opens microsoft website for downloading the sdk
+  - ~install_dotnet(version_number, etc)
+  - an alternative option is to just have a function that opens microsoft website for downloading the sdk
 - microsoft provides some bash/shell scripts for the installation of the .net sdks via terminal
--   haven't figured out how to run these quite yet... and not sure if it's wise to include some bash/sh that I'm not too familiar with
+  - haven't figured out how to run these quite yet... and not sure if it's wise to include some bash/sh that I'm not too familiar with
 - I'd love to figure out a way to add F# syntax highlighting
 - I'd also love to have rstudio recognize .fs or .fsi files in the file_viewer (and display a unique file icon for each)
 
