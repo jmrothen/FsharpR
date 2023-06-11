@@ -3,6 +3,7 @@
 #' knitr engine stuff
 #'
 #' not sure if i'll use it
+#' @export
 knitr_fs <- function(){
   knitr::knit_engines$set(
     fs = function(options){
