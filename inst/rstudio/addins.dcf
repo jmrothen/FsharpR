@@ -1,4 +1,9 @@
-Name:
-Description:
-Binding:
-Interactive:
+Name: Send selected text to FSI Terminal
+Description: Passes the selected text into the FSI terminal
+Binding: to_fsi_selected
+Interactive: false
+
+Name: Send all text to FSI Terminal
+Description: Passes all text in the current active document to the FSI Terminal
+Binding: to_fsi_all
+Interactive: false
