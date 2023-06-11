@@ -17,7 +17,7 @@ find_fsi <- function(){
       }
     }
     if(is.na(out)){
-      'no fsi terminal'
+      out <- 'no fsi terminals'
     }
   }
   return(out)
@@ -38,7 +38,7 @@ fsi_init <- function(){
     terminal <- rstudioapi::terminalCreate('FSI', show=T)
     rstudioapi::terminalSend(terminal, 'dotnet fsi\n')
   }
-  invisible(terminal)
+  return(terminal)
 }
 
 
@@ -53,15 +53,39 @@ to_fsi <- function(code, terminal=NA, show=T){
   if(is.na(terminal)){
     terminal <- find_fsi()
   }
-  code %>% stringi::stri_split_lines() -> codechunks
-  codechunks_adj <- paste(codechunks[[1]],';;\n',sep = '')
-  stringr::str_flatten(codechunks_adj) ->cca
+  if(terminal %in% c('no terminals', 'no fsi terminals')){
+    terminal <- fsi_init()
+  }
+  if(length(code)==1){
+    code %>% stringi::stri_split_lines() -> codechunks
+    codechunks_adj <- paste(codechunks[[1]],';;\n ',sep = '')
+    stringr::str_flatten(codechunks_adj) ->cca
+  }else{
+    code -> codechunks
+    codechunks_adj <- paste(codechunks,';;\n ',sep = '')
+    stringr::str_flatten(codechunks_adj) ->cca
+  }
   #rstudioapi::terminalExecute(cca)
-  if(show){rstudioapi::terminalActivate()}
-  for(i in codechunks_adj){
+  if(show){rstudioapi::terminalActivate(terminal)}
+  for(i in cca){
     rstudioapi::terminalSend(terminal, i)
   }
 }
 
 
+
+#' pass selection into fsi
+to_fsi_selected <- function(){
+  fsi_init()
+  rstudioapi::getActiveDocumentContext() -> selected_text
+  to_fsi(trimws(selected_text$selection[[1]]$text))
+}
+
+#' pass all text into fsi
+to_fsi_all <- function(){
+  fsi_init()
+  rstudioapi::getActiveDocumentContext() -> selected_text
+  print(selected_text$contents)
+  to_fsi(trimws(selected_text$contents))
+}
 
