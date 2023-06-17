@@ -30,3 +30,4 @@ The main functionality of the package are the addins included. These can be conf
 - I'd love to figure out a way to add F# syntax highlighting
 - I'd also love to have rstudio recognize .fs or .fsi files in the file_viewer (and display a unique file icon for each)
 
+- I may also include **OCaml** support, as the functions used to pass off code to FSI can probably be cleanly altered to work just as well with **utop**
