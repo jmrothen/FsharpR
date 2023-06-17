@@ -31,5 +31,5 @@ The main functionality of the package are the addins included. These can be conf
 - I'd also love to have rstudio recognize .fs or .fsi files in the file_viewer (and display a unique file icon for each)
 
 - I may also include **OCaml** support, as the functions used to pass off code to FSI can probably be cleanly altered to work just as well with **utop**
-- Maybe Lisp/haskell/erlang/scala/ anything that has an interactive console/terminal can be integrated theoretically
+- Maybe Lisp/haskell/erlang/scala/elixir anything that has an interactive console/terminal can be integrated theoretically
   - Please open up issues if a you have a specific interactive language to be integrated!
