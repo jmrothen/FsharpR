@@ -28,6 +28,7 @@ The main functionality of the package are the addins included. These can be conf
 - microsoft provides some bash/shell scripts for the installation of the .net sdks via terminal
   - haven't figured out how to run these quite yet... and not sure if it's wise to include some bash/sh that I'm not too familiar with
 - I'd love to figure out a way to add F# syntax highlighting
+  - looked into this for ages, looks like it is not an option in rstudio at this moment
 - I'd also love to have rstudio recognize .fs or .fsi files in the file_viewer (and display a unique file icon for each)
 
 - I may also include **OCaml** support, as the functions used to pass off code to FSI can probably be cleanly altered to work just as well with **utop**
