@@ -18,7 +18,7 @@ Although it might be best to wait a few months for me to improve this package a 
 
 ## Example
 
-The main functionality of the package are the addins included. These can be configured to a keyboard shortcut, and can be used to send selected text, or an entire text to a terminal where F Sharp Interactive is available.
+The main functionality of the package are the addins included. These can be configured to a keyboard shortcut, and can be used to send selected text, or an entire script to a terminal where F Sharp Interactive is available.
 
 ## Development Plans and Ideas
 
