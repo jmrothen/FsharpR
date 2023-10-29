@@ -84,6 +84,19 @@ get_sdks <- function(){
 #  }
 #}
 
+#### powershell the below
+
+# powershell
+#
+# # Define the desired .NET SDK version
+# $desiredVersion = "5.0.401"
+#
+# # Download and install the .NET SDK
+# Invoke-WebRequest -Uri "https://dotnetcli.azureedge.net/dotnet/Sdk/$desiredVersion/dotnet-sdk-$desiredVersion-win-x64.exe" -OutFile "dotnet-sdk-installer.exe"
+# Start-Process -Wait -FilePath "dotnet-sdk-installer.exe" -ArgumentList "/install", "/quiet", "/norestart"
+#
+# # Clean up the installer
+# Remove-Item "dotnet-sdk-installer.exe"
 
 
 
