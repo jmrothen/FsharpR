@@ -1,3 +1,6 @@
+// source: https://fsharpforfunandprofit.com/posts/fsharp-in-60-seconds/
+
+
 // single line comments use a double slash
 (* multi line comments use (* . . . *) pair
 
