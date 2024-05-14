@@ -7,26 +7,37 @@
 #' \item{path}{the path or paths to the relavent folders}
 #'
 #' @export
-find_dotnet <- function(verbose=T){
-  if('dotnet.exe' %in% list.files('C://program files//dotnet//')){
-    #sdks <- list.files('C://program files/dotnet/sdk')
-    #print(paste('Found some SDKs', stringr::str_flatten_comma(sdks)))
+find_dotnet <- function(verbose=T, assign=T){
 
+  # Check the basic option, works for my pc, but who knows if its normal
+  if('dotnet.exe' %in% list.files('C://program files//dotnet//')){
+
+    # Verbose output option
     if(verbose){
-      print('Found an installation at the default location...')
-      print('C://program files//dotnet//')
+      cat('Found an installation at the default location... \n')
+      cat('C://program files//dotnet//')
     }
+
+    # update output
     found <- T
     location <- "C://program files/dotnet/"
+
   }else{
-    # print('i could not find a dotnet folder in the default loprintion')
+
+    # a recursive search for files that include "dotnet"
     list.files(path="C://program files/",
                recursive = T,
                include.dirs = T,
                full.names = T,
                ignore.case = T,
                pattern='dotnet') -> folders
+
+    # filter down the list to locations that include the dotnet.exe
     folders[grepl('dotnet/dotnet.exe$',folders)] -> exes
+
+    # how many valid locations changes output
+
+    # if more than one exe, we'll pass the following info
     if(length(exes)>=2){
       if(verbose){
         print('Found some installations of the dotnet SDK:')
@@ -35,6 +46,8 @@ find_dotnet <- function(verbose=T){
       found <- T
       location <- exes
     }else{
+
+      # if no exe found, print the following
       if(is.na(exes)){
         if(verbose){
           print('Could not find any installations :(')
@@ -42,6 +55,8 @@ find_dotnet <- function(verbose=T){
         found <- F
         location <- NA
       }else{
+
+        # if only the one option, print
         if(verbose){
           print('Found an installation:')
           print(exes,sep='\n')
@@ -51,22 +66,26 @@ find_dotnet <- function(verbose=T){
       }
     }
   }
+
+  # prepare output
   out <- list(installed=found, path=location)
-  return(out)
+  invisible(out)
 }
 
 
 #' find sdks
 #'
+#' @returns List of available SDKs
 #'
-#'
+#' @export
 get_sdks <- function(){
   dotnet <- find_dotnet()
   for(i in dotnet$path){
-    print('Dotnet Installation:')
+    cat('\n Dotnet Installation: \n')
     sdks <- list.files(paste(i,'sdk',sep=''))
     print(paste('List of SDKs: ', stringr::str_flatten_comma(sdks)))
   }
+  invisible(sdks)
 }
 
 
